@@ -18,23 +18,22 @@ class CreateDynamicTables < ActiveRecord::Migration[6.1]
     add_reference(:user_journeys, :journey, foreign_key: true)
 
     create_table :user_milestones do |t|
+      t.string :name, null: false
       t.timestamps
     end
 
     add_reference(:user_milestones, :user_journey, foreign_key: true)
-    add_reference(:user_milestones, :milestone, foreign_key: true)
     add_reference(:user_milestones, :status, foreign_key: true)
 
     create_table :tasks do |t|
       t.string :name, null: false
       t.string :description, null: false
-      t.integer :difficulty, null: false
+      t.integer :effort, null: false
 
       t.timestamps
     end
 
     add_reference(:tasks, :user_milestone, foreign_key: true)
-    add_reference(:tasks, :task_type, foreign_key: true)
     add_reference(:tasks, :status, foreign_key: true)
   end
 end
