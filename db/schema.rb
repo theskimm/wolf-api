@@ -21,21 +21,7 @@ ActiveRecord::Schema.define(version: 2023_05_17_173033) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "milestones", force: :cascade do |t|
-    t.string "name", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.bigint "journey_id"
-    t.index ["journey_id"], name: "index_milestones_on_journey_id"
-  end
-
   create_table "statuses", force: :cascade do |t|
-    t.string "name", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "task_types", force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -44,14 +30,12 @@ ActiveRecord::Schema.define(version: 2023_05_17_173033) do
   create_table "tasks", force: :cascade do |t|
     t.string "name", null: false
     t.string "description", null: false
-    t.integer "difficulty", null: false
+    t.integer "effort", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "user_milestone_id"
-    t.bigint "task_type_id"
     t.bigint "status_id"
     t.index ["status_id"], name: "index_tasks_on_status_id"
-    t.index ["task_type_id"], name: "index_tasks_on_task_type_id"
     t.index ["user_milestone_id"], name: "index_tasks_on_user_milestone_id"
   end
 
@@ -65,12 +49,11 @@ ActiveRecord::Schema.define(version: 2023_05_17_173033) do
   end
 
   create_table "user_milestones", force: :cascade do |t|
+    t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "user_journey_id"
-    t.bigint "milestone_id"
     t.bigint "status_id"
-    t.index ["milestone_id"], name: "index_user_milestones_on_milestone_id"
     t.index ["status_id"], name: "index_user_milestones_on_status_id"
     t.index ["user_journey_id"], name: "index_user_milestones_on_user_journey_id"
   end
@@ -85,13 +68,10 @@ ActiveRecord::Schema.define(version: 2023_05_17_173033) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  add_foreign_key "milestones", "journeys"
   add_foreign_key "tasks", "statuses"
-  add_foreign_key "tasks", "task_types"
   add_foreign_key "tasks", "user_milestones"
   add_foreign_key "user_journeys", "journeys"
   add_foreign_key "user_journeys", "users"
-  add_foreign_key "user_milestones", "milestones"
   add_foreign_key "user_milestones", "statuses"
   add_foreign_key "user_milestones", "user_journeys"
 end

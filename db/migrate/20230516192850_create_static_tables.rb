@@ -7,24 +7,8 @@ class CreateStaticTables < ActiveRecord::Migration[6.1]
       t.timestamps
     end
 
-    # Milestones are static
-    create_table :milestones do |t|
-      t.string :name, null: false
-
-      t.timestamps
-    end
-
-    add_reference(:milestones, :journey, foreign_key: true)
-
     # Statuses are static
     create_table :statuses do |t|
-      t.string :name, null: false
-
-      t.timestamps
-    end
-
-    # Task types are static
-    create_table :task_types do |t|
       t.string :name, null: false
 
       t.timestamps
