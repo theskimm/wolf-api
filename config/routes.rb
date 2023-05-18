@@ -6,4 +6,6 @@ Rails.application.routes.draw do
 
   get 'user_journeys/:user_journey_id/milestones' => 'user_journeys#milestones'
   get 'user_milestones/:user_milestone_id/tasks' => 'user_milestones#tasks'
+
+  get 'users/:user_id/user_journeys' => 'users#user_journeys'
 end
