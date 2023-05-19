@@ -8,7 +8,8 @@ class TasksController < ApplicationController
     todo_status = Status.find_by!(name: 'To Do')
     u_milestones = UserMilestone.where(user_journey_id: u_journey.id, status_id: todo_status.id)
 
-    tasks = Task.where(status_id: todo_status.id, effort: params[:effort_levels]).limit(params[:num_tasks])
+    tasks = Task.where(status_id: todo_status.id, effort: params[:effort_levels], user_milestone_id: u_milestones)
+                .limit(params[:num_tasks])
 
     output = []
     tasks.each do |t|

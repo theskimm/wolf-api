@@ -1,9 +1,16 @@
 class UserJourneysController < ApplicationController
   def create
     user = User.find_by!(id: params[:user_id])
-    journey = Journey.find_by!(id: params[:journey_id])
 
-    roadmap = BotClient.generate_roadmap(user, journey, params[:journey_override])
+    journey =
+      if params[:journey_override]
+        Journey.create(name: params[:journey_override])
+      else
+        Journey.find_by!(id: params[:journey_id])
+      end
+
+
+    roadmap = BotClient.generate_roadmap(user, journey)
 
     uj = UserJourney.create(journey_id: journey.id, user_id: user.id)
     todo_status = Status.find_by!(name: 'To Do')

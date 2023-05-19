@@ -4,9 +4,9 @@ require 'uri'
 require 'net/http'
 
 class BotClient
-  BOT_URL = 'https://162f-68-132-139-10.ngrok.io'
+  BOT_URL = 'https://ba30-68-132-139-10.ngrok.io'
 
-  def self.generate_roadmap(user, journey, journey_override)
+  def self.generate_roadmap(user, journey)
     uri = URI("#{BOT_URL}/generate-tasks")
     headers = {'Content-Type': 'application/json'}
 
@@ -16,7 +16,7 @@ class BotClient
         city: user.city,
         state: user.state
       },
-      journey: journey_override || journey.name
+      journey: journey.name
     }
 
     bot_response = Net::HTTP.post(uri, request.to_json, headers)
